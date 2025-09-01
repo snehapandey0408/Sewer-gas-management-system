@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sewer monitoring</title>
+    <link rel="stylesheet" href="website.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet"></head>
+<body>
+    <div class="container">
+      <div class="poppins-semibold">
+        <h1 style="text-align: center;">Gas Condition Display</h1>
+      </div>
+      <div class="titillium-web-light">
+        <p>Welcome to our Sewer Gas monitoring system. Stay up-to-date with the latest measurements.</p>
+      </div>
+
+
+        <div class ="oswald-thin" id="data-top" style="text-align: center;">
+        <div class="data-container">
+            <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2506176/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15"></iframe>
+            <p id="weightX">Gas reading 1 Loading...</p>
+        </div>
+        <div class="data-container">
+            <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2506176/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15"></iframe>
+            <p id="weightY">Gas reading 2 Loading...</p>
+        </div>
+        <div class="data-container">
+            <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2506176/charts/3?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15"></iframe>
+            <p id="weightZ">Gas reading 3 Loading...</p>
+        </div>
+
+      </div>
+      <div class="precautions">
+        <ul><h3>When dealing with dangerous readings in gas detection on sewer lines, it's crucial to prioritize safety. Here are some precautions and steps to take:</h3>
+        <li>
+            <section id="evacuation-isolation">
+                <h4>Evacuation and Isolation:</h4>
+                <p>Immediate evacuation and isolation are crucial in case of dangerous gas readings. Safety should be the top priority to minimize risks.</p>
+            </section>
+        </li>
+        <li>
+            <section id="ppe">
+                <h4>Personal Protective Equipment:</h4>
+                <p>Proper PPE is essential for handling hazardous gases. Learn about the types of PPE recommended for different scenarios and how to use them.</p>
+            </section>
+        </li>
+        <li>
+            <section id="ventilation">
+                <h4>Ventilation:</h4>
+                <p>Implement effective ventilation strategies to mitigate the impact of dangerous gas readings. Learn how to improve ventilation in confined spaces.</p>
+            </section>
+        </li>
+        <li>
+            <section id="monitoring">
+                <h4>Monitoring:</h4>
+                <p>Gas detection equipment plays a crucial role in identifying hazardous gases. Understand how gas detectors work and the steps to take when dangerous readings are detected.</p>
+            </section>
+        </li>
+        <li>
+            <section id="emergency-response">
+                <h4>Emergency Response Plan:</h4>
+                <p>Develop a comprehensive emergency response plan for handling dangerous gas readings. Outline roles and responsibilities, communication protocols, and steps to take during an emergency.</p>
+            </section>
+        </li>
+        <li>
+            <section id="alert-authorities">
+                <h4>Alert Authorities:</h4>
+                <p>Notify relevant authorities, such as emergency services, utility companies, and environmental agencies, immediately. Provide clear instructions on reporting dangerous gas readings.</p>
+            </section>
+        </li>
+    </ul>
+</div>
+
+        <div class="text-box" style="text-align:center;">
+        <a href="mailto:vikashyadav1532004@gmail.com" class="btn btn-white btn-animate">Contact Us</a>
+        </div>
+        <br></br>
+        <br></br>
+
+    </div>
+
+    <script>
+        // Configure ThingSpeak
+        var apiKey = 'J40N9Q1PJD9L0G0E';  // Replace with your ThingSpeak API key
+        var channelId = '2506176';  // Replace with your ThingSpeak channel ID
+
+        // Fetch the latest weight value from ThingSpeak for Field X
+        function fetchWeightX() {
+            var url = 'https://api.thingspeak.com/channels/' + channelId + '/fields/1/last.json?api_key=' + apiKey;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    // Extract the weight value from the JSON response
+                    var weightValue = data.field1;
+
+                    // Display the weight value on the webpage
+                    var weightElement = document.getElementById('weightX');
+                    weightElement.textContent = 'Gas Reading 1: ' + weightValue;
+
+                    // Fetch the weight value again after 5 seconds
+                    setTimeout(fetchWeightX, 5000);
+                })
+                .catch(error => {mentById('weightX');
+                    console.log('Error:', error);
+                });
+        }
+
+        // Fetch the latest weight value from ThingSpeak for Field Y
+        function fetchWeightY() {
+            var url = 'https://api.thingspeak.com/channels/' + channelId + '/fields/2/last.json?api_key=' + apiKey;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    // Extract the weight value from the JSON response
+                    var weightValue = data.field2;
+
+                    // Display the weight value on the webpage
+                    var weightElement = document.getElementById('weightY');
+                    weightElement.textContent = 'Gas Reading 2: ' + weightValue;
+
+                    // Fetch the weight value again after 5 seconds
+                    setTimeout(fetchWeightY, 5000);
+                })
+                .catch(error => {
+                    console.log('Error:', error);
+                });
+        }
+
+        // Fetch the latest weight value from ThingSpeak for Field Z
+        function fetchWeightZ() {
+            var url = 'https://api.thingspeak.com/channels/' + channelId + '/fields/3/last.json?api_key=' + apiKey;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    // Extract the weight value from the JSON response
+                    var weightValue = data.field3;
+
+                    // Display the weight value on the webpage
+                    var weightElement = document.getElementById('weightZ');
+                    weightElement.textContent = 'Gas Reading 3: ' + weightValue;
+
+                    // Fetch the weight value again after 5 seconds
+                    setTimeout(fetchWeightZ, 5000);
+                })
+                .catch(error => {
+                    console.log('Error:', error);
+                });
+        }
+
+        // Fetch the latest weight value from ThingSpeak for Field A
+
+
+        // Initial fetch of weight values
+        fetchWeightX();
+        fetchWeightY();
+        fetchWeightZ();
+
+    </script>
+</body>
+</html>
